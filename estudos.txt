@@ -1,0 +1,7 @@
+Padrão Unit of Work + Repository Pattern
+
+Qualquer batch de operações (queries) executado só terá efeito no banco de dados quando for realizado o commit. Caso ocorra algum problema em qualquer uma das queries, ou se o commit não for chamado, as alterações não surtirão efeito, pois será feito um rollback automático da transação.
+
+Active Record
+
+Cada operação (query) é executada de forma individual e geralmente já envolve seu próprio commit. Se houver algum problema em determinada query, apenas essa operação específica será revertida (rollback). Diferente do Unit of Work, não há coordenação automática de várias operações em um único batch de transação, a menos que o desenvolvedor controle manualmente a transação.
