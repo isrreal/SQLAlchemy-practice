@@ -157,6 +157,29 @@ def insert_lote() -> None:
     print(f"Quantidade: {lote.quantidade}")
     print(f"Data: {lote.data_criacao}")
 
+def insert_nota_fiscal() -> None:
+    print("Cadastrando Nota Fiscal")
+
+    valor: float = input("Informe o valor da nota fiscal: ")
+    numero_serie: str = input("Informe o número de série: ")
+    descricao: str = input("Informe a descrição: ")
+    id_revendedor: int = input("Informe o ID do Revendedor") 
+
+    nota_fiscal: NotaFiscal = NotaFiscal(valor = valor, numero_serie = numero_serie, descricao = descricao, id_revendedor = id_revendedor)
+
+    with create_session() as session:
+        session.add(nota_fiscal)
+        
+        session.commit()
+
+    print('Nota Fiscal cadastrada com sucesso')
+    print(f"ID: {nota_fiscal.id}")
+    print(f"Data: {nota_fiscal.data_criacao}")
+    print(f"Valor: {nota_fiscal.valor}")
+    print(f"Número de série: {nota_fiscal.numero_serie}")
+    print(f"Descrição: {nota_fiscal.descricao}")
+    print(f"ID Revendedor: {nota_fiscal.id_revendedor}")
+
 if __name__ == '__main__':
     insert_aditivo_nutritivo()
     insert_sabores()
