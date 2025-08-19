@@ -46,6 +46,8 @@ class Picole(ModelBase):
     id: Mapped[int] = mapped_column(sa.BigInteger, primary_key=True, autoincrement=True)
     data_criacao: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now, index=True)
 
+    preco: float = sa.Column(sa.DECIMAL(8,2), nullable=False)
+
     id_sabor: Mapped[int] = mapped_column(sa.Integer, sa.ForeignKey('sabores.id'))
     sabor: Mapped[Sabor] = relationship('Sabor', lazy='joined')
 
