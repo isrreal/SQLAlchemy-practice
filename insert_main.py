@@ -7,6 +7,11 @@ from models.ingrediente import Ingrediente
 from models.conservante import Conservante
 from models.revendedor import Revendedor
 
+
+from models.lote import Lote
+from models.nota_fiscal import NotaFiscal
+from models.picole import Picole 
+
 def insert_aditivo_nutritivo() -> None:
     print("Cadastrando aditivo nutritivo")
 
@@ -132,6 +137,25 @@ def insert_revendedor() -> None:
     print(f"Data: {revendedor.data_criacao}")
     print(f"Nome: {revendedor.nome}")
     print(f"Razão Social: {revendedor.razao_social}")
+
+def insert_lote() -> None:
+    print("Cadastrando Lote")
+
+    id_tipo_picole: int = input('Informe o ID tipo do picolé: ')
+    quantidade: int = input('Informe a quantidade de picolé: ')
+
+    lote: Lote = Lote(id_tipo_picole = id_tipo_picole, quantidade = quantidade)
+
+    with create_session() as session:
+        session.add(lote)
+        
+        session.commit()
+
+    print('Lote cadastrado com sucesso')
+    print(f"ID: {lote.id}")
+    print(f"ID tipo picole: {lote.id_tipo_picole}")
+    print(f"Quantidade: {lote.quantidade}")
+    print(f"Data: {lote.data_criacao}")
 
 if __name__ == '__main__':
     insert_aditivo_nutritivo()
