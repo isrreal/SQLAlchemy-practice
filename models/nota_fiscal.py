@@ -32,6 +32,8 @@ class NotaFiscal(ModelBase):
     valor: Mapped[float] = mapped_column(DECIMAL(8, 2), nullable=False)
     numero_serie: Mapped[str] = mapped_column(String(45), unique=True, nullable=False)
 
+    descricao: str = sa.Column(sa.String(200), nullable=False)
+
     id_revendedor: Mapped[int] = mapped_column(Integer, sa.ForeignKey('revendedores.id'))
     revendedor: Mapped[Revendedor] = relationship('Revendedor', lazy='joined')
 
@@ -44,7 +46,12 @@ class NotaFiscal(ModelBase):
 
     def __repr__(self) -> str:
         return (
-            f"<NotaFiscal ID={self.id}, Série={self.numero_serie}, "
-            f"Revendedor={self.revendedor.nome if self.revendedor else 'N/A'}, "
-            f"Valor={self.valor}>"
+            f"<NotaFiscal("
+            f"id={self.id}, "
+            f"numero_serie='{self.numero_serie}', "
+            f"data_criacao='{self.data_criacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_criacao else None}', "
+            f"valor={self.valor:.2f}, "
+            f"descricao='{self.descricao}', "
+            f"revendedor='{self.revendedor.nome if self.revendedor else 'N/A'}'"
+            f")>"
         )
