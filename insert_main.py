@@ -28,7 +28,7 @@ def insert_aditivo_nutritivo() -> AditivoNutritivo:
 
     return aditivo_nutritivo
 
-def insert_sabores() -> Sabor:
+def insert_sabor() -> Sabor:
     print("Cadastrando sabores")
 
     nome: str = input('Informe o nome do Sabor: ')
@@ -160,11 +160,65 @@ def insert_nota_fiscal() -> None:
     print(f"Descrição: {nota_fiscal.descricao}")
     print(f"ID Revendedor: {nota_fiscal.id_revendedor}")
 
+# 10 Picole
+def insert_picole() -> None:
+    print('Cadastrando Picole')
+
+    preco: float = input('Informe o preço do picole: ')
+    id_sabor: int = input('Informe o ID do sabor: ')
+    id_tipo_picole: int = input('Informe o ID do tipo de picole: ')
+    id_tipo_embalagem: int = input('Informe o ID do tipo da embalagem: ')
+
+    picole: Picole = Picole(id_sabor=id_sabor, id_tipo_embalagem=id_tipo_embalagem, id_tipo_picole=id_tipo_picole, preco=preco)
+
+    ingrediente1 = insert_ingrediente()
+    picole.ingredientes.append(ingrediente1)
+
+    ingrediente2 = insert_ingrediente()
+    picole.ingredientes.append(ingrediente2)
+
+    # Tem conservantes?
+    conservante = insert_conservante()
+    picole.conservantes.append(conservante)
+
+    # Tem aditivos nutritivos?
+    aditivo_nutritivo = insert_aditivo_nutritivo()
+    picole.aditivos_nutritivos.append(aditivo_nutritivo)
+
+    with create_session() as session:
+        session.add(picole)
+
+        session.commit()
+    
+        print('Picole cadastrado com sucesso')
+        print(f'ID: {picole.id}')
+        print(f'Data: {picole.data_criacao}')
+        print(f'Preço: {picole.preco}')
+        print(f'Sabor: {picole.sabor.nome}')
+        print(f'Tipo Picole: {picole.tipo_picole.nome}')
+        print(f'Tipo Embalagem: {picole.tipo_embalagem.nome}')
+        print(f'Ingredientes: {picole.ingredientes}')
+        print(f'Conservantes: {picole.conservantes}')
+        print(f'Aditivos Nutritivos: {picole.aditivos_nutritivos}')
+
+
 if __name__ == '__main__':
     insert_aditivo_nutritivo()
-    insert_sabores()
+
+    insert_sabor()
+
     insert_tipo_embalagem()
+
     insert_tipo_picole()
+
     insert_ingrediente()
+
     insert_conservante()
+
     insert_revendedor()
+
+    insert_lote()
+
+    insert_nota_fiscal()
+
+    insert_picole()
