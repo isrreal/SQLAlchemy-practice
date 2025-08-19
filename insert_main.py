@@ -12,7 +12,7 @@ from models.lote import Lote
 from models.nota_fiscal import NotaFiscal
 from models.picole import Picole 
 
-def insert_aditivo_nutritivo() -> None:
+def insert_aditivo_nutritivo() -> AditivoNutritivo:
     print("Cadastrando aditivo nutritivo")
 
     nome: str = input('Informe o nome do aditivo nutrritivo: ')
@@ -26,13 +26,9 @@ def insert_aditivo_nutritivo() -> None:
         
         session.commit()
 
-    print('Aditivo nutritivo adicionado com sucesso')
-    print(f"ID: {aditivo_nutritivo.id}")
-    print(f"Data: {aditivo_nutritivo.data_criacao}")
-    print(f"Nome: {aditivo_nutritivo.nome}")
-    print(f"Fórmula Química: {aditivo_nutritivo.formula_quimica}")
+    return aditivo_nutritivo
 
-def insert_sabores() -> None:
+def insert_sabores() -> Sabor:
     print("Cadastrando sabores")
 
     nome: str = input('Informe o nome do Sabor: ')
@@ -43,12 +39,9 @@ def insert_sabores() -> None:
         
         session.commit()
 
-    print('Sabor cadastrado com sucesso')
-    print(f"ID: {sabor.id}")
-    print(f"Data: {sabor.data_criacao}")
-    print(f"Nome: {sabor.nome}")
+    return sabor
 
-def insert_tipo_embalagem() -> None:
+def insert_tipo_embalagem() -> TipoEmbalagem:
     print("Cadastrando Tipo Embalagem")
 
     nome: str = input('Informe o nome do Tipo Embalagem: ')
@@ -60,12 +53,9 @@ def insert_tipo_embalagem() -> None:
         
         session.commit()
 
-    print('Tipo Embalagem cadastrado com sucesso')
-    print(f"ID: {tipo_embalagem.id}")
-    print(f"Data: {tipo_embalagem.data_criacao}")
-    print(f"Nome: {tipo_embalagem.nome}")
+    return TipoEmbalagem
 
-def insert_tipo_picole() -> None:
+def insert_tipo_picole() -> TipoPicole:
     print("Cadastrando Tipo Picole")
 
     nome: str = input('Informe o nome do Tipo Picole: ')
@@ -77,12 +67,9 @@ def insert_tipo_picole() -> None:
         
         session.commit()
 
-    print('Tipo Picole cadastrado com sucesso')
-    print(f"ID: {tipo_picole.id}")
-    print(f"Data: {tipo_picole.data_criacao}")
-    print(f"Nome: {tipo_picole.nome}")
+    return TipoPicole
 
-def insert_ingrediente() -> None:
+def insert_ingrediente() -> Ingrediente:
     print("Cadastrando Ingrediente")
 
     nome: str = input('Informe o nome do Ingrediente: ')
@@ -94,12 +81,9 @@ def insert_ingrediente() -> None:
         
         session.commit()
 
-    print('Ingrediente cadastrado com sucesso')
-    print(f"ID: {ingrediente.id}")
-    print(f"Data: {ingrediente.data_criacao}")
-    print(f"Nome: {ingrediente.nome}")
+    return Ingrediente
 
-def insert_conservante() -> None:
+def insert_conservante() -> Conservante:
     print("Cadastrando Conservante")
 
     nome: str = input('Informe o nome do Conservante: ')
@@ -112,13 +96,9 @@ def insert_conservante() -> None:
         
         session.commit()
 
-    print('Ingrediente cadastrado com sucesso')
-    print(f"ID: {conservante.id}")
-    print(f"Data: {conservante.data_criacao}")
-    print(f"Nome: {conservante.nome}")
-    print(f"Descrição: {conservante.descricao}")
+    return conservante
 
-def insert_revendedor() -> None:
+def insert_revendedor() -> Revendedor:
     print("Cadastrando Revendedor")
 
     CNPJ: str = input('Informe o CNPJ do revendedor: ')
@@ -132,13 +112,9 @@ def insert_revendedor() -> None:
         
         session.commit()
 
-    print('Revendedor cadastrado com sucesso')
-    print(f"ID: {revendedor.id}")
-    print(f"Data: {revendedor.data_criacao}")
-    print(f"Nome: {revendedor.nome}")
-    print(f"Razão Social: {revendedor.razao_social}")
+    return revendedor
 
-def insert_lote() -> None:
+def insert_lote() -> Lote:
     print("Cadastrando Lote")
 
     id_tipo_picole: int = input('Informe o ID tipo do picolé: ')
@@ -151,11 +127,7 @@ def insert_lote() -> None:
         
         session.commit()
 
-    print('Lote cadastrado com sucesso')
-    print(f"ID: {lote.id}")
-    print(f"ID tipo picole: {lote.id_tipo_picole}")
-    print(f"Quantidade: {lote.quantidade}")
-    print(f"Data: {lote.data_criacao}")
+    return lote
 
 def insert_nota_fiscal() -> None:
     print("Cadastrando Nota Fiscal")
@@ -163,9 +135,17 @@ def insert_nota_fiscal() -> None:
     valor: float = input("Informe o valor da nota fiscal: ")
     numero_serie: str = input("Informe o número de série: ")
     descricao: str = input("Informe a descrição: ")
-    id_revendedor: int = input("Informe o ID do Revendedor") 
+
+    revendedor: Revendedor = insert_revendedor()
+    id_revendedor: int = revendedor.id 
 
     nota_fiscal: NotaFiscal = NotaFiscal(valor = valor, numero_serie = numero_serie, descricao = descricao, id_revendedor = id_revendedor)
+    
+    lote1 = insert_lote()
+    lote2 = insert_lote()
+    
+    nota_fiscal.lotes.append(lote1)
+    nota_fiscal.lotes.append(lote2)
 
     with create_session() as session:
         session.add(nota_fiscal)
