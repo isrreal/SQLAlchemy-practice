@@ -14,8 +14,11 @@ class Lote(ModelBase):
     id_tipo_picole: Mapped[int] = mapped_column(sa.Integer, sa.ForeignKey('tipos_picole.id'))
     tipo_picole: Mapped[TipoPicole] = relationship('TipoPicole', lazy='joined')
 
+    quantidade: int = sa.Column(sa.Integer, nullable = False)
+
     def __repr__(self) -> str:
         return (
-            f"<Lote ID={self.id}, Tipo={self.tipo_picole.nome if self.tipo_picole else 'N/A'}, "
-            f"Data={self.data_criacao}>"
+            f"<Lote ID: {self.id}, Tipo: {self.tipo_picole.nome if self.tipo_picole else 'N/A'}, "
+            f"Data: {self.data_criacao},"
+            f"Quantidade: {self.quantidade}"
         )
