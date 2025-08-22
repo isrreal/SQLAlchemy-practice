@@ -34,8 +34,8 @@ class NotaFiscal(ModelBase):
 
     descricao: str = sa.Column(sa.String(200), nullable=False)
 
-    id_revendedor: Mapped[int] = mapped_column(Integer, sa.ForeignKey('revendedores.id'))
-    revendedor: Mapped[Revendedor] = relationship('Revendedor', lazy='joined')
+    id_revendedor: Mapped[int] = mapped_column(Integer, sa.ForeignKey('revendedores.id'), cascade = "CASCADE")
+    revendedor: Mapped[Revendedor] = relationship('Revendedor', lazy='joined', cascade = "delete")
 
     lotes: Mapped[List[Lote]] = relationship(
         'Lote',
