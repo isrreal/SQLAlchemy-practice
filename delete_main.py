@@ -15,7 +15,7 @@ def deletar_picole(id_picole: int) -> None:
 
 def deletar_revendedor(id_revendedor: int) -> None:
     with create_session() as session:
-        revendedor: Optional[Revendedor] = session.query(revendedor).filter(revendedor.id == id_revendedor).one_or_none()
+        revendedor: Optional[Revendedor] = session.query(Revendedor).filter(Revendedor.id == id_revendedor).one_or_none()
         
         if revendedor:
             session.delete(revendedor)
