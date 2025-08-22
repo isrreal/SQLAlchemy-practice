@@ -32,7 +32,7 @@ def insert_sabor() -> Sabor:
     print("Cadastrando sabores")
 
     nome: str = input('Informe o nome do Sabor: ')
-    sabor: Sabor = Sabor(nome)
+    sabor: Sabor = Sabor(nome = nome)
 
     with create_session() as session:
         session.add(sabor)
