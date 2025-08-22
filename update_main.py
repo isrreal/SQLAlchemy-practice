@@ -1,8 +1,6 @@
 from conf.db_session import create_session
-
 from models.sabor import Sabor 
 from models.picole import Picole
-
 
 def atualizar_sabor(id_sabor: int, novo_nome: str) -> None:
     with create_session() as session:
@@ -11,7 +9,7 @@ def atualizar_sabor(id_sabor: int, novo_nome: str) -> None:
         if sabor:
             sabor.nome = novo_nome
             session.commit()
-
+            print(f"Sabor ID {id_sabor} atualizado para '{novo_nome}'")
         else:
             print(f"Não existe sabor com ID {id_sabor}")
 
@@ -22,14 +20,13 @@ def atualizar_picole(id_picole: int, novo_preco: float) -> None:
         if picole:
             picole.preco = novo_preco 
             session.commit()
+            print(f"Picolé ID {id_picole} atualizado para preço R$ {novo_preco:.2f}")
         else:
             print(f"Não existe picolé com ID {id_picole}")
 
 if __name__ == "__main__":
-    from select_main import select_filtro_sabor
-
     id_sabor = 42
-    #tipo_sabor = select_filtro_sabor(id_sabor = id_sabor)
+    id_picole = 15  
 
     atualizar_sabor(id_sabor, "Cachaça")
-
+    atualizar_picole(id_picole, 9.99)
